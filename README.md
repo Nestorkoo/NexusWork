@@ -1,50 +1,37 @@
-Project: NexusWork
-NexusWork is an ERP system designed for task and workflow management, tailored for teams of any size and scale. The system combines functionality for task management, performance analytics, communication, and team motivation. NexusWork simplifies the organization of workflows with an intuitive interface, extensive features, and integrations with external services.
+NexusWork
+NexusWork — це багатофункціональна ERP-система для керування завданнями, командами та робочим процесом. Проєкт дозволяє командам ефективно співпрацювати, відстежувати прогрес, управляти завданнями та досягати цілей завдяки інтегрованим інструментам для аналітики й продуктивності.
 
-Core Features
-Registration and Authentication
-
-User registration via email.
-Authentication using JWT tokens.
-Task Management
-
-Create, edit, and delete tasks.
-Assign tasks to specific users.
-Set deadlines and task statuses (new, in progress, completed).
-Task templates for quickly creating frequently used tasks.
-Dashboard
-
-Visualize statistics of completed, pending, and in-progress tasks.
-Track the number of tasks by status and team progress through graphical representation.
-Analytics on time spent on tasks and user productivity.
-Automation and Notifications
-
-Automatic reminders about task deadlines.
-Notifications sent to external services (Slack API, Google Calendar API).
-Roles and Access Control
-
-Define various access levels for tasks, channels, and statistics.
-Task Filters and Sorting
-
-Filter tasks by status, deadline, priority, or user.
-Motivation System
-
-Badges and achievements for completing tasks on time and active team participation.
-Ability to assign user levels (e.g., Junior, Pro, Expert) based on completed tasks.
-Feedback and Team Reviews
-
-Developers can leave comments and feedback to improve team productivity and performance.
-Integrations and APIs
-
-Google Calendar API: Sync deadlines and events.
-Slack API / Discord API: Send task updates and notifications to text channels.
-GitHub API: Automatically link tasks with Pull Requests and Issues.
-SendGrid API: Generate and send performance reports via email.
-Statistics and Analysis
-
-Task status distribution (new, in progress, completed).
-Visualized deadlines (Gantt chart, calendar view).
-Time tracking: analyze time spent on tasks and user productivity.
-Optional ChatGPT integration to analyze team performance and suggest improvements.
-Summary
-NexusWork provides a robust solution for teams to organize tasks, track progress, and improve productivity. The platform is highly adaptable, offering integrations with widely-used APIs to automate workflows and communication. With advanced features like task templates, role management, and analytics, NexusWork aims to streamline project management while fostering a culture of collaboration and motivation.
+Основні можливості
+🔐 Аутентифікація та реєстрація
+Реєстрація користувачів.
+Аутентифікація через JWT-токени для захисту API.
+Створення робочого середовища (workspace).
+📋 Управління завданнями
+CRUD-операції: створення, редагування та видалення завдань.
+Призначення завдань конкретним користувачам.
+Встановлення дедлайнів для завдань.
+Статуси завдань: нове, в процесі, завершене.
+Шаблони завдань: можливість зберігати часто використовувані завдання для швидкого створення.
+📊 Статистика та аналітика
+Візуалізація дедлайнів за допомогою календаря та діаграми Ганта.
+Аналітика за часом, витраченим на завдання, та продуктивність команди.
+Відображення кількості завдань за статусами.
+Можливість використання штучного інтелекту (GPT) для аналізу статистики та успішності.
+🗂️ Ролі та права доступу
+Різні рівні доступу до завдань, каналів та статистики.
+📥 Фільтри та сортування завдань
+Фільтрування за статусом, дедлайном, пріоритетом або користувачем.
+💬 Комунікація
+Текстові канали для спілкування всередині команди.
+Автоматичні нагадування про дедлайни завдань.
+🏆 Мотиваційна система
+Бейджі та досягнення: нагороди за виконання завдань вчасно, активну участь у команді.
+Рівні для користувачів (наприклад: Junior, Pro, Expert).
+📝 Відгуки та зворотний зв'язок
+Коментарі від розробників для команди щодо їх успішності та якості виконання завдань.
+Технології
+Backend: Python, Django, Django REST Framework.
+Database: PostgreSQL.
+Caching: Redis.
+Task Queue: Celery.
+Containerization: Docker.

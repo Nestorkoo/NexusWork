@@ -1,28 +1,26 @@
-version: "3.9"
-
+version: '3'
 services:
+  db:
+    image: postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./backend:/app
+      - .:/code
     ports:
       - "8000:8000"
-    env_file:
-      - backend/dev.env
     depends_on:
       - db
-
-  db:
-    image: postgres:15
     environment:
-      POSTGRES_DB: nexuswork_db
-      POSTGRES_USER: nexuswork_user
-      POSTGRES_PASSWORD: nexuswork_password
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-volumes:
-  postgres_data:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_HOST: ${DB_HOST}

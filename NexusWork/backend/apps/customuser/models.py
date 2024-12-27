@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
-
+from backend.apps.spaces.models import Space
 
 class CustomUser(AbstractUser):
     ROLE_CHOICES = [
@@ -40,6 +40,7 @@ class CustomUser(AbstractUser):
 
     ]
     roles = models.CharField(max_length=50, default='employer', choices=ROLE_CHOICES)
+    spaces_count = models.IntegerField(default=0)
 
     def __str__(self):
         """

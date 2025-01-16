@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from backend.apps.spaces.models import Space
 from backend.apps.customuser.models import CustomUser
-
-
 class SpaceSerializer(serializers.ModelSerializer):
     members = serializers.PrimaryKeyRelatedField(
         many=True, queryset=CustomUser.objects.all(), required=False
@@ -27,8 +25,12 @@ class SpaceSerializer(serializers.ModelSerializer):
 
         space.members.add(self.context['request'].user) 
         space.members.add(*members)
-
+        user = self.context['request'].user
+        user.roles = 'ceo'
+        user.save()
         self.context['request'].user.spaces_count += 1
+        if self.context['request'].user.spaces_count > 1:
+            return serializers.ValidationError('You already have 1 space!')
         self.context['request'].user.save()
 
         return space

@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'backend.apps.customuser',
     'backend.apps.spaces',
+    'backend.apps.teams',
+    'backend.apps.tasks',
 ]
 
 MIDDLEWARE = [

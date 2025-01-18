@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from backend.apps.teams.serializers import TeamSerializer, TeamUpdateSerializer
 from backend.apps.teams.models import Team
-
+from backend.apps.customuser.models import CustomUser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
@@ -33,3 +33,49 @@ class TeamViewDetail(APIView):
             return Response({'Team does not exist'}, status=status.HTTP_400_BAD_REQUEST)
         serializer = TeamSerializer(team)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    def delete(self, request, pk):
+        
+        if Team.objects.filter(pk=pk, owner=request.user).exists():
+            team = Team.objects.get(pk=pk)
+        else:
+            return Response({'Team does not exist or you are not the owner'}, status=status.HTTP_400_BAD_REQUEST)
+        team.delete()
+        return Response(f'Team {team} deleted successfully', status=status.HTTP_200_OK)
+    def post(self, request, pk):
+        user = request.user
+        team = Team.objects.get(pk=pk)
+        team.members.remove(user)
+        return Response(f"User {user} removed from team {team}", status=status.HTTP_200_OK)
+
+class TeamAddMemberView(APIView):
+    autherntication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated] 
+    def post(self, request, team_pk, user_pk):
+        team = Team.objects.filter(pk=team_pk, owner=request.user).first()
+        user = CustomUser.objects.filter(pk=user_pk).first()
+        if team and user:
+            if team.members.filter(pk=user_pk).exists():
+                return Response({'User already in team'}, status=status.HTTP_400_BAD_REQUEST)    
+            team.members.add(user)
+            return Response({'User added to team'}, status=status.HTTP_200_OK)
+        return Response({'Team or user does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+
+class TeamLeaveView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        user = request.user
+        team = Team.objects.get(pk=pk)
+        if not team or not user:
+            return Response({'Team or user does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+        team.members.remove(user)
+        return Response(f"User {user} leaved from team {team}", status=status.HTTP_200_OK)
+
+class TeamUpdateView(generics.UpdateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = Team.objects.all()
+    serializer_class = TeamUpdateSerializer
+
+

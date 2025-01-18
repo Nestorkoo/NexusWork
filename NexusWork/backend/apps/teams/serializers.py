@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from backend.apps.teams.models import Team
 from backend.apps.spaces.models import Space
+
 class TeamSerializer(serializers.ModelSerializer):
     # members = serializers.PrimaryKeyRelatedField(many=True, queryset=Team.objects.all(), required=False)
     class Meta:
@@ -8,7 +9,7 @@ class TeamSerializer(serializers.ModelSerializer):
         fields = ['name', 'description', 'members','created_at', 'updated_at']
     
     def create(self, validated_data):
-        if 'name' in validated_data and len(validated_data['name']) < 4:
+        if 'name' in validated_data and len(validated_data['name']) == 4:
             raise serializers.ValidationError('The name should be at least 4 characters long')
 
         if 'description' in validated_data and len(validated_data['description']) < 10:

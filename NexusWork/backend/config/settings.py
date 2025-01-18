@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'backend.apps.spaces',
     'backend.apps.teams',
     'backend.apps.tasks',
+    'backend.apps.comments'
 ]
 
 MIDDLEWARE = [

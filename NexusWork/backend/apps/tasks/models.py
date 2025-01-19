@@ -14,7 +14,7 @@ class Task(models.Model):
 
     title = models.CharField(max_length=100)
     description = models.TextField()
-    assigned_to = models.ForeignKey('customuser.CustomUser', on_delete=models.CASCADE)
+    assigned_to = models.ForeignKey('teams.Team', on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=statuses, default='open')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

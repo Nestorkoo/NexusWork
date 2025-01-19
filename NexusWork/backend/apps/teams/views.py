@@ -31,16 +31,24 @@ class TeamViewDetail(APIView):
             team = Team.objects.get(pk=pk)
         else:
             return Response({'Team does not exist'}, status=status.HTTP_400_BAD_REQUEST)
-        serializer = TeamSerializer(team)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    def delete(self, request, pk):
         
-        if Team.objects.filter(pk=pk, owner=request.user).exists():
+        tasks = team.tasks.all()
+        task_data = [{'id': task.id, 'name': task.title, 'description': task.description, 'status': task.status} for task in tasks]
+        
+        serializer = TeamSerializer(team)
+        team_data = serializer.data
+        team_data['tasks'] = task_data
+        
+        return Response(team_data, status=status.HTTP_200_OK)
+
+    def delete(self, request, pk):
+        if Team.objects.filter(pk=pk, owner_id=request.user).exists():
             team = Team.objects.get(pk=pk)
         else:
             return Response({'Team does not exist or you are not the owner'}, status=status.HTTP_400_BAD_REQUEST)
         team.delete()
         return Response(f'Team {team} deleted successfully', status=status.HTTP_200_OK)
+
     def post(self, request, pk):
         user = request.user
         team = Team.objects.get(pk=pk)
@@ -51,7 +59,7 @@ class TeamAddMemberView(APIView):
     autherntication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated] 
     def post(self, request, team_pk, user_pk):
-        team = Team.objects.filter(pk=team_pk, owner=request.user).first()
+        team = Team.objects.filter(pk=team_pk, owner_id=request.user).first()
         user = CustomUser.objects.filter(pk=user_pk).first()
         if team and user:
             if team.members.filter(pk=user_pk).exists():

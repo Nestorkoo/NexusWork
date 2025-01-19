@@ -24,3 +24,9 @@ class CommentCreate(generics.CreateAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = CommentSerializer
+
+class CommentDelete(generics.DestroyAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.all()

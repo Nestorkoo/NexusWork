@@ -3,7 +3,6 @@ from backend.apps.teams.models import Team
 from backend.apps.spaces.models import Space
 
 class TeamSerializer(serializers.ModelSerializer):
-    # members = serializers.PrimaryKeyRelatedField(many=True, queryset=Team.objects.all(), required=False)
     class Meta:
         model = Team
         fields = ['name', 'description', 'members','created_at', 'updated_at']

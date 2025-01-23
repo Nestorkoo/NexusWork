@@ -12,7 +12,6 @@ class TaskSerializer(serializers.ModelSerializer):
         team_pk = self.context.get('team_pk') 
         if not team_pk:
             raise serializers.ValidationError({'team_pk': 'Team primary key is required'})
-
         try:
             team = Team.objects.get(pk=team_pk)
         except Team.DoesNotExist:

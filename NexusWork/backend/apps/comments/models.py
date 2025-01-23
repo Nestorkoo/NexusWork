@@ -8,7 +8,9 @@ class Comment(models.Model):
     author = models.ForeignKey(
         "customuser.CustomUser", on_delete=models.CASCADE, related_name="comments"
     )
-    team = models.ForeignKey("teams.Team", on_delete=models.CASCADE, related_name="comments")
+    team = models.ForeignKey(
+        "teams.Team", on_delete=models.CASCADE, related_name="comments", blank=True, null=True
+    )
 
     def __str__(self):
         return self.text

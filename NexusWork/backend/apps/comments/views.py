@@ -20,11 +20,15 @@ class CommentViewDetail(APIView):
             return Response({'Comments does not exist'}, status=status.HTTP_400_BAD_REQUEST)
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+        
 class CommentCreate(generics.CreateAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = CommentSerializer
-
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['team_pk'] = self.kwargs.get('team_pk')
+        return context
 class CommentDelete(generics.DestroyAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]

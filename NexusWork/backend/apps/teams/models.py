@@ -22,7 +22,7 @@ class Team(models.Model):
     tasks = models.ManyToManyField('tasks.Task', related_name='teams', blank=True)
     achievement = models.CharField(max_length=150, choices=achievements, default='No achievements')
     tasks_completed = models. IntegerField(default=0)
-    comment = models.ManyToManyField('comments.Comment', related_name='teams', blank=True)
+    comment = models.ManyToManyField('comments.Comment', related_name='teams', blank=True, null=True)
     score = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -34,12 +34,5 @@ class Team(models.Model):
         verbose_name_plural = 'Teams'
         ordering = ['-created_at']
 
-    def set_new_rank(self):
-        if self.score > 250:
-            self.rank = 'pro_team'
-        elif self.score > 600:
-            self.rank = 'expert_team'
-        else:
-            self.rank = 'junior_team'
-        self.save()
+    
         

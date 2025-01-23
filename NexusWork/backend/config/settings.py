@@ -29,12 +29,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'celery',
     'rest_framework',
     'backend.apps.customuser',
     'backend.apps.spaces',
     'backend.apps.teams',
     'backend.apps.tasks',
-    'backend.apps.comments'
+    'backend.apps.comments',
+    
 ]
 
 MIDDLEWARE = [
